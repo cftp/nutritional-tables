@@ -108,11 +108,18 @@ class NutritionalTables extends NutritionalTables_Plugin {
 	 * @return void
 	 * @author Simon Wheatley
 	 **/
-	public function shortcode_nutritional_table() {
-		global $post;
-		$vars = get_post_meta( $post->ID, '_nutritional_table', true );
-		$vars[ 'key' ] = $this->elements;
-		return $this->capture( 'shortcode-nutritional-table.php', $vars );
+	public function shortcode_nutritional_table( $attr, $content = null ) {
+		if ( is_array( $attr ) && in_array( 'for_my_children', $attr ) )
+			$attr[ 'for_my_children' ] = true;
+		
+		extract(shortcode_atts(array(
+			'for_my_children'	=> false,
+		), $attr));
+		
+		if ( $for_my_children )
+			return $this->nutrition_table_for_children();
+		else
+			return $this->nutrition_table();
 	}
 
 	// UTILITIES
@@ -137,6 +144,42 @@ class NutritionalTables extends NutritionalTables_Plugin {
 			$meta[ $key ] = @ $_POST[ 'nt_' . $key ];
 		}
 		update_post_meta( $post_ID, '_nutritional_table', $meta );
+	}
+	
+	/**
+	 * Render the nutrition table for the current post/page.
+	 *
+	 * @return string The HTML for the nutrition table
+	 * @author Simon Wheatley
+	 **/
+	protected function nutrition_table() {
+		$vars = get_post_meta( get_the_ID(), '_nutritional_table', true );
+		$vars[ 'key' ] = $this->elements;
+		return $this->capture( 'shortcode-nutritional-table.php', $vars );
+	}
+	
+	/**
+	 * Render the combinded nutrition table for the children of the current post/page.
+	 *
+	 * @return string The HTML for the nutrition table
+	 * @author Simon Wheatley
+	 **/
+	protected function nutrition_table_for_children() {
+		global $wpdb;
+		$sql = " SELECT ID FROM $wpdb->posts WHERE post_type = 'page' AND post_parent = %d ORDER BY menu_order ASC ";
+		$prepared_sql = $wpdb->prepare( $sql, get_the_ID() );
+		$kids = $wpdb->get_col( $prepared_sql );
+
+		$vars = array(
+			'products' => array(),
+		);
+		foreach( $kids AS & $ID )
+			$vars[ 'products' ][] = array(
+				'title' => get_the_title( $ID ),
+				'elements' => get_post_meta( $ID, '_nutritional_table', true ),
+			);
+		$vars[ 'key' ] = $this->elements;
+		return $this->capture( 'shortcode-nutritional-table-for-children.php', $vars );
 	}
 
 } // END AjaxCommentUpdate class 
