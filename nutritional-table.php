@@ -12,7 +12,7 @@ Author URI: http://www.sweetinteraction.com/
  * WordPress plugin which adds a metabox to enter nutritional tables for a
  * page, you can then insert the tables with a shortcode. One table per page.
  *
- * @package AjaxCommentUpdate
+ * @package NutritionalTables
  */
 
 /*  Copyright 2010 Simon Wheatley
