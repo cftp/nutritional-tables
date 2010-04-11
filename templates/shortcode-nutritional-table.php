@@ -10,7 +10,7 @@
 	<tbody>
 		<?php foreach( $this->elements AS $key => $name ) : ?>
 		<tr>
-			<th scope="row"><?php _e( $name ); ?></th>
+			<th scope="row"><?php _e( $name, 'nt' ); ?></th>
 			<td><?php echo $$key; ?></td>
 		</tr>
 		<?php endforeach; ?>

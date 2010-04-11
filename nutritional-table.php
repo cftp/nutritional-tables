@@ -63,14 +63,14 @@ class NutritionalTables extends NutritionalTables_Plugin {
 		$this->add_action( 'save_post', null, null, 2 );
 		$this->add_shortcode( 'nutritional_table', 'shortcode_nutritional_table' );
 		$this->elements = array(
-			'energy' => 'Energy',
-			'protein' => 'Protein',
-			'carbs' => 'Carbohydrates',
-			'carbs_sugars' => '&nbsp;of which sugars',
-			'fat' => 'Fats',
-			'fat_sat' => '&nbsp;of which saturates',
-			'fibre' => 'Fibre',
-			'sodium' => 'Sodium',
+			'energy' => __( 'Energy', 'nt'),
+			'protein' => __( 'Protein', 'nt'),
+			'carbs' => __( 'Carbohydrates', 'nt'),
+			'carbs_sugars' => __( ' - of which sugars', 'nt'),
+			'fat' => __( 'Fats', 'nt'),
+			'fat_sat' => __( ' - of which saturates', 'nt'),
+			'fibre' => __( 'Fibre', 'nt'),
+			'sodium' => __( 'Sodium', 'nt'),
 		);
 	}
 	
