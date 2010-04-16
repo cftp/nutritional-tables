@@ -4,7 +4,6 @@
 	<thead>
 		<tr>
 			<td><!-- --></td>
-			<?php error_log( "Cols: " . count( $products ) ); ?>
 			<th scope="col" class="per_x" colspan="<?php esc_attr_e( count( $products ) ) ?>"><?php _e( 'Per 100g', 'nt' ); ?></th>
 		</tr>
 		<tr>
