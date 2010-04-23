@@ -166,7 +166,7 @@ class NutritionalTables extends NutritionalTables_Plugin {
 	 **/
 	protected function nutrition_table_for_children() {
 		global $wpdb;
-		$sql = " SELECT ID FROM $wpdb->posts WHERE post_type = 'page' AND post_parent = %d ORDER BY menu_order ASC ";
+		$sql = " SELECT ID FROM $wpdb->posts WHERE post_type = 'page' AND post_parent = %d AND post_type = 'page' AND post_status = 'publish' ORDER BY menu_order ASC ";
 		$prepared_sql = $wpdb->prepare( $sql, get_the_ID() );
 		$kids = $wpdb->get_col( $prepared_sql );
 
