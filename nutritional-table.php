@@ -159,7 +159,7 @@ class NutritionalTables extends NutritionalTables_Plugin {
 	}
 	
 	/**
-	 * Render the combinded nutrition table for the children of the current post/page.
+	 * Render the combined nutrition table for the children of the current post/page.
 	 *
 	 * @return string The HTML for the nutrition table
 	 * @author Simon Wheatley
