@@ -8,10 +8,10 @@
 		</tr>
 	</thead>
 	<tbody>
-		<?php foreach( $this->elements AS $key => $name ) : ?>
+		<?php foreach( $elements AS $element => $value ) : ?>
 		<tr>
-			<th scope="row"><?php _e( $name, 'nt' ); ?></th>
-			<td><?php echo $$key; ?></td>
+			<th scope="row"><?php _e( $key[ $element ], 'nt' ); ?></th>
+			<td><?php echo $value; ?></td>
 		</tr>
 		<?php endforeach; ?>
 	</tbody>

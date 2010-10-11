@@ -153,7 +153,8 @@ class NutritionalTables extends NutritionalTables_Plugin {
 	 * @author Simon Wheatley
 	 **/
 	protected function nutrition_table() {
-		$vars = get_post_meta( get_the_ID(), '_nutritional_table', true );
+		$vars = array();
+		$vars[ 'elements' ] = get_post_meta( get_the_ID(), '_nutritional_table', true );
 		$vars[ 'key' ] = $this->elements;
 		return $this->capture( 'shortcode-nutritional-table.php', $vars );
 	}
