@@ -3,7 +3,7 @@
 Plugin Name: Nutritional Tables
 Plugin URI: http://www.simonwheatley.co.uk/wordpress/nt
 Description: Adds a metabox to enter nutritional tables for a page, you can then insert the tables with a shortcode. One table per page.
-Version: 0.9
+Version: 1.0
 Author: Sweet Interaction Ltd
 Author URI: http://www.sweetinteraction.com/ 
 */
@@ -59,7 +59,7 @@ class NutritionalTables extends NutritionalTables_Plugin {
 	 **/
 	public function __construct() {
 		$this->setup();
-		$this->add_meta_box( 'nutritional_table', __('Nutritional Table'), 'metabox_nutritional_table', 'page', 'normal', 'high' );
+		$this->add_action( 'admin_init' );
 		$this->add_action( 'save_post', null, null, 2 );
 		$this->add_shortcode( 'nutritional_table', 'shortcode_nutritional_table' );
 		$this->elements = array(
@@ -76,6 +76,21 @@ class NutritionalTables extends NutritionalTables_Plugin {
 	
 	// HOOKS AND ALL THAT
 	// ==================
+
+	/**
+	 * Hooks the WP action admin_init to add the metaboxes.
+	 *
+	 * @return void
+	 * @author Simon Wheatley
+	 **/
+	public function admin_init() {
+		$post_types = apply_filters( 'nt_post_types', array( 'page' ) );
+		foreach ( $post_types as $post_type ) {
+			if ( ! post_type_exists( $post_type ) )
+				continue;
+			$this->add_meta_box( 'nutritional_table', __('Nutritional Table'), 'metabox_nutritional_table', $post_type, 'normal', 'high' );
+		}
+	}
 	
 	/**
 	 * Provides a metabox to enter nutritional information.
@@ -84,7 +99,6 @@ class NutritionalTables extends NutritionalTables_Plugin {
 	 * @author Simon Wheatley
 	 **/
 	public function metabox_nutritional_table() {
-		wp_nonce_field( 'nutritional_table', '_nutritional_table_nonce' );
 		global $post;
 		$vars = get_post_meta( $post->ID, '_nutritional_table', true );
 		$this->render_admin( 'metabox.php', $vars );
@@ -167,8 +181,9 @@ class NutritionalTables extends NutritionalTables_Plugin {
 	 **/
 	protected function nutrition_table_for_children() {
 		global $wpdb;
-		$sql = " SELECT ID FROM $wpdb->posts WHERE post_type = 'page' AND post_parent = %d AND post_type = 'page' AND post_status = 'publish' ORDER BY menu_order ASC ";
-		$prepared_sql = $wpdb->prepare( $sql, get_the_ID() );
+		$post = get_post( get_the_ID() );
+		$sql = " SELECT ID FROM $wpdb->posts WHERE post_type = %s AND post_parent = %d AND post_status = 'publish' ORDER BY menu_order ASC ";
+		$prepared_sql = $wpdb->prepare( $sql, $post->post_type, $post->ID );
 		$kids = $wpdb->get_col( $prepared_sql );
 
 		$vars = array(
