@@ -8,13 +8,6 @@ Author: Sweet Interaction Ltd
 Author URI: http://www.sweetinteraction.com/ 
 */
 
-/**
- * WordPress plugin which adds a metabox to enter nutritional tables for a
- * page, you can then insert the tables with a shortcode. One table per page.
- *
- * @package NutritionalTables
- */
-
 /*  Copyright 2010 Simon Wheatley
 
     This program is free software; you can redistribute it and/or modify
@@ -36,10 +29,7 @@ Author URI: http://www.sweetinteraction.com/
 require_once( 'plugin.php' );
 
 /**
- * WordPress plugin class which adds a metabox to enter nutritional tables for a 
- * page, you can then insert the tables with a shortcode. One table per page.
- *
- * @package default
+ * @package NutritionalTables
  * @author Simon Wheatley
  **/
 class NutritionalTables extends NutritionalTables_Plugin {
@@ -198,7 +188,7 @@ class NutritionalTables extends NutritionalTables_Plugin {
 		return $this->capture( 'shortcode-nutritional-table-for-children.php', $vars );
 	}
 
-} // END AjaxCommentUpdate class 
+} // END NutritionalTables class 
 
 $nutritional_tables = new NutritionalTables();
 

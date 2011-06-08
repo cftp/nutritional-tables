@@ -11,7 +11,7 @@
 		<?php foreach( $elements AS $element => $value ) : ?>
 		<tr>
 			<th scope="row"><?php _e( $key[ $element ], 'nt' ); ?></th>
-			<td><?php echo $value; ?></td>
+			<td><?php echo esc_html( $value ); ?></td>
 		</tr>
 		<?php endforeach; ?>
 	</tbody>
