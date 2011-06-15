@@ -90,7 +90,7 @@ class NutritionalTables extends NutritionalTables_Plugin {
 	 **/
 	public function metabox_nutritional_table() {
 		global $post;
-		$vars = get_post_meta( $post->ID, '_nutritional_table', true );
+		$vars = $this->get_nutritional_elements( $post->ID );
 		$this->render_admin( 'metabox.php', $vars );
 	}
 	
@@ -143,7 +143,7 @@ class NutritionalTables extends NutritionalTables_Plugin {
 		// Authorised to do it?
 		check_admin_referer( 'nutritional_table', '_nutritional_table_nonce' );
 		// OK. Let's go...
-		$meta = get_post_meta( $post_ID, '_nutritional_table', true );
+		$meta = $this->get_nutritional_elements( $post_ID );
 		foreach ( $this->elements AS $key => $name ) {
 			$meta[ $key ] = @ $_POST[ 'nt_' . $key ];
 		}
@@ -158,7 +158,7 @@ class NutritionalTables extends NutritionalTables_Plugin {
 	 **/
 	protected function nutrition_table() {
 		$vars = array();
-		$vars[ 'elements' ] = get_post_meta( get_the_ID(), '_nutritional_table', true );
+		$vars[ 'elements' ] = $this->get_nutritional_elements( get_the_ID() );
 		$vars[ 'key' ] = $this->elements;
 		return $this->capture( 'shortcode-nutritional-table.php', $vars );
 	}
@@ -179,13 +179,31 @@ class NutritionalTables extends NutritionalTables_Plugin {
 		$vars = array(
 			'products' => array(),
 		);
-		foreach( $kids AS & $ID )
+		foreach( $kids AS & $kid_ID )
 			$vars[ 'products' ][] = array(
-				'title' => get_the_title( $ID ),
-				'elements' => get_post_meta( $ID, '_nutritional_table', true ),
+				'title' => get_the_title( $kid_ID ),
+				'elements' => $this->get_nutritional_elements( $kid_ID ),
 			);
 		$vars[ 'key' ] = $this->elements;
 		return $this->capture( 'shortcode-nutritional-table-for-children.php', $vars );
+	}
+
+	/**
+	 * Returns the nutritional elements, stripping any which are equivalent
+	 * to the empty string.
+	 *
+	 * @param int $post_ID The ID of the post/page for which to get the elements 
+	 * @return array An array of values
+	 * @author Simon Wheatley
+	 **/
+	protected function get_nutritional_elements( $post_ID ) {
+		$elements = (array) get_post_meta( $post_ID, '_nutritional_table', true );
+		// Remove elements which are empty
+		foreach ( $elements as $element => $value ) {
+			if ( trim( $value ) === '' )
+				unset( $elements[ $element ] );
+		}
+		return $elements;
 	}
 
 } // END NutritionalTables class 
