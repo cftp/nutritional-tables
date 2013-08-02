@@ -1,7 +1,7 @@
 <?php 
 /*
 Plugin Name: Nutritional Tables
-Plugin URI: http://www.simonwheatley.co.uk/wordpress/nt
+Plugin URI: https://github.com/cftp/nutritional-tables
 Description: Adds a metabox to enter nutritional tables for a page, you can then insert the tables with a shortcode. One table per page.
 Version: 1.0
 Author: Code For The People Ltd
