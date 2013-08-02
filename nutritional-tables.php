@@ -4,11 +4,26 @@ Plugin Name: Nutritional Tables
 Plugin URI: http://www.simonwheatley.co.uk/wordpress/nt
 Description: Adds a metabox to enter nutritional tables for a page, you can then insert the tables with a shortcode. One table per page.
 Version: 1.0
-Author: Sweet Interaction Ltd
-Author URI: http://www.sweetinteraction.com/ 
+Author: Code For The People Ltd
+Author URI: http://www.codefothepeople.com/ 
 */
 
-/*  Copyright 2010 Simon Wheatley
+/*  Copyright 2013 Code For The People Ltd
+				_____________
+			   /      ____   \
+		 _____/       \   \   \
+		/\    \        \___\   \
+	   /  \    \                \
+	  /   /    /          _______\
+	 /   /    /          \       /
+	/   /    /            \     /
+	\   \    \ _____    ___\   /
+	 \   \    /\    \  /       \
+	  \   \  /  \____\/    _____\
+	   \   \/        /    /    / \
+		\           /____/    /___\
+		 \                        /
+		  \______________________/
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
