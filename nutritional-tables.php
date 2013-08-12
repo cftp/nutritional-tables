@@ -186,7 +186,7 @@ class NutritionalTables extends NutritionalTables_Plugin {
 	protected function nutrition_table() {
 		$vars = array();
 		$vars[ 'elements' ] = $this->get_nutritional_elements( get_the_ID() );
-		$vars[ 'key' ] = $this->get_elements;
+		$vars[ 'key' ] = $this->get_elements();
 		return $this->capture( 'shortcode-nutritional-table.php', $vars );
 	}
 	
@@ -211,7 +211,7 @@ class NutritionalTables extends NutritionalTables_Plugin {
 				'title' => get_the_title( $kid_ID ),
 				'elements' => $this->get_nutritional_elements( $kid_ID ),
 			);
-		$vars[ 'key' ] = $this->get_elements;
+		$vars[ 'key' ] = $this->get_elements();
 		return $this->capture( 'shortcode-nutritional-table-for-children.php', $vars );
 	}
 
