@@ -67,16 +67,6 @@ class NutritionalTables extends NutritionalTables_Plugin {
 		$this->add_action( 'admin_init' );
 		$this->add_action( 'save_post', null, null, 2 );
 		$this->add_shortcode( 'nutritional_table', 'shortcode_nutritional_table' );
-		$this->elements = array(
-			'energy' => __( 'Energy', 'nt'),
-			'protein' => __( 'Protein', 'nt'),
-			'carbs' => __( 'Carbohydrates', 'nt'),
-			'carbs_sugars' => __( ' - of which sugars', 'nt'),
-			'fat' => __( 'Fats', 'nt'),
-			'fat_sat' => __( ' - of which saturates', 'nt'),
-			'fibre' => __( 'Fibre', 'nt'),
-			'sodium' => __( 'Sodium', 'nt'),
-		);
 	}
 	
 	// HOOKS AND ALL THAT
@@ -95,6 +85,28 @@ class NutritionalTables extends NutritionalTables_Plugin {
 				continue;
 			$this->add_meta_box( 'nutritional_table', __('Nutritional Table'), 'metabox_nutritional_table', $post_type, 'normal', 'high' );
 		}
+	}
+	
+	/************
+	ceate the nutritional elements, allowing devs to alter through use of filter
+	************/
+	public function get_elements() {
+		
+		/* build the standard elemements into an array */
+		$elements = array(
+			'energy' => __( 'Energy', 'nt'),
+			'protein' => __( 'Protein', 'nt'),
+			'carbs' => __( 'Carbohydrates', 'nt'),
+			'carbs_sugars' => __( ' - of which sugars', 'nt'),
+			'fat' => __( 'Fats', 'nt'),
+			'fat_sat' => __( ' - of which saturates', 'nt'),
+			'fibre' => __( 'Fibre', 'nt'),
+			'sodium' => __( 'Sodium', 'nt'),
+		);
+		
+		/* pass standard elements through filter so they can be altered by devs */
+		return apply_filters( 'nt_nutritional_elements', $elements );
+		
 	}
 	
 	/**
@@ -159,7 +171,7 @@ class NutritionalTables extends NutritionalTables_Plugin {
 		check_admin_referer( 'nutritional_table', '_nutritional_table_nonce' );
 		// OK. Let's go...
 		$meta = $this->get_nutritional_elements( $post_ID );
-		foreach ( $this->elements AS $key => $name ) {
+		foreach ( $this->get_elements AS $key => $name ) {
 			$meta[ $key ] = @ $_POST[ 'nt_' . $key ];
 		}
 		update_post_meta( $post_ID, '_nutritional_table', $meta );
@@ -174,7 +186,7 @@ class NutritionalTables extends NutritionalTables_Plugin {
 	protected function nutrition_table() {
 		$vars = array();
 		$vars[ 'elements' ] = $this->get_nutritional_elements( get_the_ID() );
-		$vars[ 'key' ] = $this->elements;
+		$vars[ 'key' ] = $this->get_elements;
 		return $this->capture( 'shortcode-nutritional-table.php', $vars );
 	}
 	
@@ -199,7 +211,7 @@ class NutritionalTables extends NutritionalTables_Plugin {
 				'title' => get_the_title( $kid_ID ),
 				'elements' => $this->get_nutritional_elements( $kid_ID ),
 			);
-		$vars[ 'key' ] = $this->elements;
+		$vars[ 'key' ] = $this->get_elements;
 		return $this->capture( 'shortcode-nutritional-table-for-children.php', $vars );
 	}
 
