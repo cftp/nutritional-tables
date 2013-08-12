@@ -171,7 +171,7 @@ class NutritionalTables extends NutritionalTables_Plugin {
 		check_admin_referer( 'nutritional_table', '_nutritional_table_nonce' );
 		// OK. Let's go...
 		$meta = $this->get_nutritional_elements( $post_ID );
-		foreach ( $this->get_elements AS $key => $name ) {
+		foreach ( $this->get_elements() AS $key => $name ) {
 			$meta[ $key ] = @ $_POST[ 'nt_' . $key ];
 		}
 		update_post_meta( $post_ID, '_nutritional_table', $meta );
