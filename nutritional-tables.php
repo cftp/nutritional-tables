@@ -3,9 +3,11 @@
 Plugin Name: Nutritional Tables
 Plugin URI: https://github.com/cftp/nutritional-tables
 Description: Adds a metabox to enter nutritional tables for a page, you can then insert the tables with a shortcode. One table per page.
-Version: 1.0
+Version: 1.1
 Author: Code For The People Ltd
 Author URI: http://www.codefothepeople.com/ 
+Text Domain:  nuttab
+Domain Path:  /languages/
 */
 
 /*  Copyright 2013 Code For The People Ltd
@@ -75,6 +77,8 @@ class NutritionalTables extends NutritionalTables_Plugin {
 	/**
 	 * Hooks the WP action admin_init to add the metaboxes.
 	 *
+	 * @uses apply_filters() Calls 'nt_post_types' on array of post types to show metabox on
+	 *
 	 * @return void
 	 * @author Simon Wheatley
 	 **/
@@ -83,25 +87,30 @@ class NutritionalTables extends NutritionalTables_Plugin {
 		foreach ( $post_types as $post_type ) {
 			if ( ! post_type_exists( $post_type ) )
 				continue;
-			$this->add_meta_box( 'nutritional_table', __('Nutritional Table'), 'metabox_nutritional_table', $post_type, 'normal', 'high' );
+			$this->add_meta_box( 'nutritional_table', __('Nutritional Table', 'nuttab'), 'metabox_nutritional_table', $post_type, 'normal', 'high' );
 		}
 	}
 	
-	/************
-	ceate the nutritional elements, allowing devs to alter through use of filter
-	************/
+	/**
+	 * Provides the nutritional elements to be listed for each product.
+	 *
+	 * @uses apply_filters() Calls 'nt_nutritional_elements' on array before returning
+	 *
+	 * @return array An associative array of nutritional element labels
+	 * @author Mark Wilkinson
+	 **/
 	public function get_elements() {
 		
 		/* build the standard elemements into an array */
 		$elements = array(
-			'energy' => __( 'Energy', 'nt'),
-			'protein' => __( 'Protein', 'nt'),
-			'carbs' => __( 'Carbohydrates', 'nt'),
-			'carbs_sugars' => __( ' - of which sugars', 'nt'),
-			'fat' => __( 'Fats', 'nt'),
-			'fat_sat' => __( ' - of which saturates', 'nt'),
-			'fibre' => __( 'Fibre', 'nt'),
-			'sodium' => __( 'Sodium', 'nt'),
+			'energy' => __( 'Energy', 'nuttab'),
+			'protein' => __( 'Protein', 'nuttab'),
+			'carbs' => __( 'Carbohydrates', 'nuttab'),
+			'carbs_sugars' => __( ' - of which sugars', 'nuttab'),
+			'fat' => __( 'Fats', 'nuttab'),
+			'fat_sat' => __( ' - of which saturates', 'nuttab'),
+			'fibre' => __( 'Fibre', 'nuttab'),
+			'sodium' => __( 'Sodium', 'nuttab'),
 		);
 		
 		/* pass standard elements through filter so they can be altered by devs */
@@ -199,6 +208,7 @@ class NutritionalTables extends NutritionalTables_Plugin {
 	protected function nutrition_table_for_children() {
 		global $wpdb;
 		$post = get_post( get_the_ID() );
+		// @TODO: Replace with a WP_Query
 		$sql = " SELECT ID FROM $wpdb->posts WHERE post_type = %s AND post_parent = %d AND post_status = 'publish' ORDER BY menu_order ASC ";
 		$prepared_sql = $wpdb->prepare( $sql, $post->post_type, $post->ID );
 		$kids = $wpdb->get_col( $prepared_sql );
@@ -211,6 +221,7 @@ class NutritionalTables extends NutritionalTables_Plugin {
 				'title' => get_the_title( $kid_ID ),
 				'elements' => $this->get_nutritional_elements( $kid_ID ),
 			);
+
 		$vars[ 'key' ] = $this->get_elements();
 		return $this->capture( 'shortcode-nutritional-table-for-children.php', $vars );
 	}

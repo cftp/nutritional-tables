@@ -1,0 +1,98 @@
+# Copyright (C) 2013 Nutritional Tables
+# This file is distributed under the same license as the Nutritional Tables package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Nutritional Tables 1.1\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/nutritional-tables\n"
+"POT-Creation-Date: 2013-08-22 10:00:16+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2013-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: nutritional-tables.php:88
+msgid "Nutritional Table"
+msgstr ""
+
+#: nutritional-tables.php:99
+msgid "Energy"
+msgstr ""
+
+#: nutritional-tables.php:100
+msgid "Protein"
+msgstr ""
+
+#: nutritional-tables.php:101
+msgid "Carbohydrates"
+msgstr ""
+
+#: nutritional-tables.php:102
+msgid " - of which sugars"
+msgstr ""
+
+#: nutritional-tables.php:103
+msgid "Fats"
+msgstr ""
+
+#: nutritional-tables.php:104
+msgid " - of which saturates"
+msgstr ""
+
+#: nutritional-tables.php:105
+msgid "Fibre"
+msgstr ""
+
+#: nutritional-tables.php:106
+msgid "Sodium"
+msgstr ""
+
+#: plugin.php:163 plugin.php:214
+msgid "This plugin template could not be found: %s"
+msgstr ""
+
+#: templates/shortcode-nutritional-table-for-children.php:1
+#: templates/shortcode-nutritional-table-for-children.php:3
+#: templates/shortcode-nutritional-table.php:1
+#: templates/shortcode-nutritional-table.php:3
+msgid "Nutrition Information"
+msgstr ""
+
+#: templates/shortcode-nutritional-table-for-children.php:7
+#: templates/shortcode-nutritional-table.php:7
+msgid "Per 100g"
+msgstr ""
+
+#: templates/shortcode-nutritional-table-for-children.php:10
+#: templates/shortcode-nutritional-table.php:6
+msgid "Typical Values"
+msgstr ""
+
+#: templates_admin/metabox.php:2
+msgid ""
+"You can insert this table into your page by typing <code>[nutritional_table]"
+"</code> into the editor above. The values should be per 100g."
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Nutritional Tables"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://github.com/cftp/nutritional-tables"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Adds a metabox to enter nutritional tables for a page, you can then insert "
+"the tables with a shortcode. One table per page."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Code For The People Ltd"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://www.codefothepeople.com/"
+msgstr ""
