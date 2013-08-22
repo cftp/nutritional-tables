@@ -1,5 +1,5 @@
 === Nutritional Tables ===
-Contributors: simonwheatley
+Contributors: simonwheatley, wpmark
 Tags: nutritional elements, nutritional tables, nutrition
 Requires at least: 3.5.2
 Tested up to: 3.5.2
